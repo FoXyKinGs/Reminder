@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2024 at 02:44 PM
+-- Generation Time: Jun 07, 2024 at 07:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,19 +24,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_reminder`
+--
+
+CREATE TABLE `tb_reminder` (
+  `id` int(11) NOT NULL,
+  `Title` varchar(255) NOT NULL,
+  `Date` date NOT NULL,
+  `Note` text NOT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp(),
+  `created_by_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_user`
 --
 
 CREATE TABLE `tb_user` (
   `id` int(11) NOT NULL,
-  `Nama` varchar(255) NOT NULL,
+  `Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
+  `Nickname` varchar(255) NOT NULL,
   `Password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_reminder`
+--
+ALTER TABLE `tb_reminder`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_user`
@@ -47,6 +69,12 @@ ALTER TABLE `tb_user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `tb_reminder`
+--
+ALTER TABLE `tb_reminder`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
