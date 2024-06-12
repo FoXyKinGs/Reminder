@@ -36,6 +36,15 @@ CREATE TABLE `tb_reminder` (
   `created_by_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tb_reminder`
+--
+
+INSERT INTO `tb_reminder` (`id`, `Title`, `Date`, `Note`, `created_at`, `created_by_id`) VALUES
+(1, 'Tugas Pemrograman Desktop', '0000-00-00 00:00:00', 'Membuat video penjelasan aplikasi, sesuai pertemua ke 11 diminggu lalu', '2024-06-12', 0),
+(2, 'Tugas Algortima', '0000-00-00 00:00:00', 'Membuat video penjelasan exception short', '2024-06-12', 0),
+(3, 'Tugas Pemrograman Web', '2024-06-12 13:38:03', 'Membuat Responsive Website', '2024-06-12', 0);
+
 -- --------------------------------------------------------
 
 --
