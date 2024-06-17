@@ -72,7 +72,7 @@ Partial Class AddReminder
         ' 
         ' btnAddReminder
         ' 
-        btnAddReminder.Location = New Point(181, 522)
+        btnAddReminder.Location = New Point(203, 522)
         btnAddReminder.Name = "btnAddReminder"
         btnAddReminder.Size = New Size(224, 34)
         btnAddReminder.TabIndex = 4

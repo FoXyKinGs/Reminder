@@ -28,7 +28,7 @@ Partial Class Login
         txtEmail = New TextBox()
         txtPassword = New TextBox()
         Label3 = New Label()
-        Label4 = New Label()
+        btnCreateOne = New Label()
         SuspendLayout()
         ' 
         ' btnLogin
@@ -82,24 +82,24 @@ Partial Class Login
         Label3.TabIndex = 5
         Label3.Text = "Don't have an account?"
         ' 
-        ' Label4
+        ' btnCreateOne
         ' 
-        Label4.AutoSize = True
-        Label4.Cursor = Cursors.Hand
-        Label4.Font = New Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, CByte(0))
-        Label4.ForeColor = SystemColors.Highlight
-        Label4.Location = New Point(216, 120)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(101, 25)
-        Label4.TabIndex = 6
-        Label4.Text = "Create one."
+        btnCreateOne.AutoSize = True
+        btnCreateOne.Cursor = Cursors.Hand
+        btnCreateOne.Font = New Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, CByte(0))
+        btnCreateOne.ForeColor = SystemColors.Highlight
+        btnCreateOne.Location = New Point(216, 120)
+        btnCreateOne.Name = "btnCreateOne"
+        btnCreateOne.Size = New Size(101, 25)
+        btnCreateOne.TabIndex = 6
+        btnCreateOne.Text = "Create one."
         ' 
         ' Login
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(529, 217)
-        Controls.Add(Label4)
+        Controls.Add(btnCreateOne)
         Controls.Add(Label3)
         Controls.Add(txtPassword)
         Controls.Add(txtEmail)
@@ -118,6 +118,6 @@ Partial Class Login
     Friend WithEvents txtEmail As TextBox
     Friend WithEvents txtPassword As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
+    Friend WithEvents btnCreateOne As Label
 
 End Class

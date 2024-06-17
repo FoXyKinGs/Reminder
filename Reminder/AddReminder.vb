@@ -21,21 +21,28 @@ Public Class AddReminder
 
     Private Sub btnAddReminder_Click(sender As Object, e As EventArgs) Handles btnAddReminder.Click
         If txtTitle.Text = "" Or txtbNote.Text = "" Then
-            MessageBox.Show("Fulfiled all the form, Thanks!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please fill out all fields.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Else
             Try
                 Call OpenDB()
-                Dim send = "INSERT INTO tb_reminder (Title, Date, Note) VALUES (@Title, @Date, @Note)"
+
+                ' SQL query to insert reminder with user ID
+                Dim send As String = "INSERT INTO tb_reminder (Title, Date, Note, created_by_id) VALUES (@Title, @Date, @Note, @CreatedBy)"
                 CMD = New MySqlCommand(send, Conn)
                 CMD.Parameters.AddWithValue("@Title", txtTitle.Text)
                 Dim dateTimeValue As DateTime = dtpDate.Value.Date.Add(dtpTime.Value.TimeOfDay)
                 CMD.Parameters.AddWithValue("@Date", dateTimeValue)
                 CMD.Parameters.AddWithValue("@Note", txtbNote.Text)
+                CMD.Parameters.AddWithValue("@CreatedBy", My.Settings.UserID)
+
                 CMD.ExecuteNonQuery()
+
                 Call ClearForm()
                 MessageBox.Show("Reminder Added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Catch ex As Exception
-                MsgBox(ex.ToString, MsgBoxStyle.Critical, "There's an error")
+                MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error")
+            Finally
+                Conn.Close()
             End Try
         End If
     End Sub

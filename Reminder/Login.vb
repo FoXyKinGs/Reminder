@@ -68,4 +68,10 @@ Public Class Login
             Conn.Close()
         End Try
     End Sub
+
+    Private Sub btnCreateOne_Click(sender As Object, e As EventArgs) Handles btnCreateOne.Click
+        Dim Register As New Register()
+        Register.Show()
+        Me.Hide()
+    End Sub
 End Class
