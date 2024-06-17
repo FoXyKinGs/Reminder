@@ -25,13 +25,19 @@ Partial Class Reminder
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Reminder))
         TabControl1 = New TabControl()
         tabHome = New TabPage()
+        dgUpcomingEvent = New DataGridView()
+        dgListEvent = New DataGridView()
+        Label4 = New Label()
+        Label3 = New Label()
         btnAddEvent = New Button()
-        Label2 = New Label()
+        label2 = New Label()
         Label1 = New Label()
         tabSettings = New TabPage()
         Button1 = New Button()
         TabControl1.SuspendLayout()
         tabHome.SuspendLayout()
+        CType(dgUpcomingEvent, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgListEvent, ComponentModel.ISupportInitialize).BeginInit()
         tabSettings.SuspendLayout()
         SuspendLayout()
         ' 
@@ -47,8 +53,12 @@ Partial Class Reminder
         ' 
         ' tabHome
         ' 
+        tabHome.Controls.Add(dgUpcomingEvent)
+        tabHome.Controls.Add(dgListEvent)
+        tabHome.Controls.Add(Label4)
+        tabHome.Controls.Add(Label3)
         tabHome.Controls.Add(btnAddEvent)
-        tabHome.Controls.Add(Label2)
+        tabHome.Controls.Add(label2)
         tabHome.Controls.Add(Label1)
         tabHome.Location = New Point(4, 34)
         tabHome.Name = "tabHome"
@@ -58,28 +68,64 @@ Partial Class Reminder
         tabHome.Text = "Home"
         tabHome.UseVisualStyleBackColor = True
         ' 
+        ' dgUpcomingEvent
+        ' 
+        dgUpcomingEvent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgUpcomingEvent.Location = New Point(34, 72)
+        dgUpcomingEvent.Name = "dgUpcomingEvent"
+        dgUpcomingEvent.RowHeadersWidth = 62
+        dgUpcomingEvent.Size = New Size(949, 225)
+        dgUpcomingEvent.TabIndex = 6
+        ' 
+        ' dgListEvent
+        ' 
+        dgListEvent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgListEvent.Location = New Point(34, 379)
+        dgListEvent.Name = "dgListEvent"
+        dgListEvent.RowHeadersWidth = 62
+        dgListEvent.Size = New Size(949, 225)
+        dgListEvent.TabIndex = 5
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(437, 454)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(157, 25)
+        Label4.TabIndex = 4
+        Label4.Text = "No event available"
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(391, 179)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(240, 25)
+        Label3.TabIndex = 3
+        Label3.Text = "There's no up coming events"
+        ' 
         ' btnAddEvent
         ' 
         btnAddEvent.Image = CType(resources.GetObject("btnAddEvent.Image"), Image)
-        btnAddEvent.ImageAlign = ContentAlignment.MiddleLeft
-        btnAddEvent.Location = New Point(858, 17)
+        btnAddEvent.ImageAlign = ContentAlignment.MiddleRight
+        btnAddEvent.Location = New Point(876, 8)
         btnAddEvent.Name = "btnAddEvent"
-        btnAddEvent.Size = New Size(124, 48)
+        btnAddEvent.Size = New Size(121, 48)
         btnAddEvent.TabIndex = 2
         btnAddEvent.Text = "Add Event"
         btnAddEvent.TextImageRelation = TextImageRelation.ImageBeforeText
         btnAddEvent.UseVisualStyleBackColor = True
         ' 
-        ' Label2
+        ' label2
         ' 
-        Label2.AutoSize = True
-        Label2.BackColor = Color.Thistle
-        Label2.Font = New Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(26, 310)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(90, 38)
-        Label2.TabIndex = 1
-        Label2.Text = "Event"
+        label2.AutoSize = True
+        label2.BackColor = Color.Thistle
+        label2.Font = New Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        label2.Location = New Point(14, 317)
+        label2.Name = "label2"
+        label2.Size = New Size(90, 38)
+        label2.TabIndex = 1
+        label2.Text = "Event"
         ' 
         ' Label1
         ' 
@@ -123,6 +169,8 @@ Partial Class Reminder
         TabControl1.ResumeLayout(False)
         tabHome.ResumeLayout(False)
         tabHome.PerformLayout()
+        CType(dgUpcomingEvent, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgListEvent, ComponentModel.ISupportInitialize).EndInit()
         tabSettings.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
@@ -133,5 +181,9 @@ Partial Class Reminder
     Friend WithEvents Button1 As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents btnAddEvent As Button
-    Friend WithEvents Label2 As Label
+    Friend WithEvents label2 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents dgUpcomingEvent As DataGridView
+    Friend WithEvents dgListEvent As DataGridView
 End Class

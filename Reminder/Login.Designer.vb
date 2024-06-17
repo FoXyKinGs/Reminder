@@ -22,41 +22,102 @@ Partial Class Login
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Button1 = New Button()
-        Button2 = New Button()
+        btnLogin = New Button()
+        Label1 = New Label()
+        Label2 = New Label()
+        txtEmail = New TextBox()
+        txtPassword = New TextBox()
+        Label3 = New Label()
+        Label4 = New Label()
         SuspendLayout()
         ' 
-        ' Button1
+        ' btnLogin
         ' 
-        Button1.Location = New Point(12, 126)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(206, 34)
-        Button1.TabIndex = 0
-        Button1.Text = "Halaman Utama"
-        Button1.UseVisualStyleBackColor = True
+        btnLogin.Location = New Point(290, 161)
+        btnLogin.Name = "btnLogin"
+        btnLogin.Size = New Size(206, 34)
+        btnLogin.TabIndex = 0
+        btnLogin.Text = "Login"
+        btnLogin.UseVisualStyleBackColor = True
         ' 
-        ' Button2
+        ' Label1
         ' 
-        Button2.Location = New Point(224, 126)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(174, 34)
-        Button2.TabIndex = 1
-        Button2.Text = "Register"
-        Button2.UseVisualStyleBackColor = True
+        Label1.AutoSize = True
+        Label1.Location = New Point(25, 26)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(54, 25)
+        Label1.TabIndex = 1
+        Label1.Text = "Email"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(25, 81)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(87, 25)
+        Label2.TabIndex = 2
+        Label2.Text = "Password"
+        ' 
+        ' txtEmail
+        ' 
+        txtEmail.Location = New Point(139, 26)
+        txtEmail.Name = "txtEmail"
+        txtEmail.Size = New Size(357, 31)
+        txtEmail.TabIndex = 3
+        ' 
+        ' txtPassword
+        ' 
+        txtPassword.Location = New Point(139, 81)
+        txtPassword.Name = "txtPassword"
+        txtPassword.PasswordChar = "*"c
+        txtPassword.Size = New Size(357, 31)
+        txtPassword.TabIndex = 4
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(25, 120)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(197, 25)
+        Label3.TabIndex = 5
+        Label3.Text = "Don't have an account?"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Cursor = Cursors.Hand
+        Label4.Font = New Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, CByte(0))
+        Label4.ForeColor = SystemColors.Highlight
+        Label4.Location = New Point(216, 120)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(101, 25)
+        Label4.TabIndex = 6
+        Label4.Text = "Create one."
         ' 
         ' Login
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(426, 172)
-        Controls.Add(Button2)
-        Controls.Add(Button1)
+        ClientSize = New Size(529, 217)
+        Controls.Add(Label4)
+        Controls.Add(Label3)
+        Controls.Add(txtPassword)
+        Controls.Add(txtEmail)
+        Controls.Add(Label2)
+        Controls.Add(Label1)
+        Controls.Add(btnLogin)
         Name = "Login"
         Text = "Login"
         ResumeLayout(False)
+        PerformLayout()
     End Sub
 
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents btnLogin As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txtEmail As TextBox
+    Friend WithEvents txtPassword As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
 
 End Class
