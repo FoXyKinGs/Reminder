@@ -33,10 +33,19 @@ Public Class Reminder
                 MessageBox.Show("User details not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
 
+            ' Close the reader and connection
+            reader.Close()
+
+            ' Load reminders for the user
+            LoadReminders()
+
+            ' Check and load upcoming events
+            CheckAndLoadUpcomingReminders()
+
         Catch ex As Exception
             MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error Loading User Profile")
         Finally
-            ' Close the reader and connection
+            ' Close the connection
             If Conn.State = ConnectionState.Open Then Conn.Close()
         End Try
     End Sub
@@ -56,6 +65,89 @@ Public Class Reminder
 
         ' Update greeting label
         lblGreeting.Text = $"Good {timeOfDay}. Welcome back, {greetingName}!"
+    End Sub
+
+    Private Sub LoadReminders()
+        Try
+            Call OpenDB()
+
+            ' Query to select reminders based on UserID
+            Dim selectRemindersQuery As String = "SELECT Title, Date, Note FROM tb_reminder WHERE created_by_id = @UserId ORDER BY Date DESC"
+            CMD = New MySqlCommand(selectRemindersQuery, Conn)
+            CMD.Parameters.AddWithValue("@UserId", My.Settings.UserID)
+
+            ' Create DataAdapter and DataSet
+            Dim DA As New MySqlDataAdapter(CMD)
+            Dim DS As New DataSet()
+
+            ' Fill DataSet with data from DataAdapter
+            DA.Fill(DS, "Reminders")
+
+            ' Check if there are reminders
+            If DS.Tables("Reminders").Rows.Count > 0 Then
+                ' Bind DataSet to DataGridView dgListEvent
+                dgListEvent.DataSource = DS.Tables("Reminders")
+
+                ' Optionally, customize DataGridView appearance and behavior
+                dgListEvent.Columns("Title").HeaderText = "Title"
+                dgListEvent.Columns("Date").HeaderText = "Date"
+                dgListEvent.Columns("Note").HeaderText = "Note"
+                dgListEvent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+                ' Show the DataGridView
+                dgListEvent.Show()
+            Else
+                ' No reminders found, hide the DataGridView
+                dgListEvent.Hide()
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error Loading Reminders")
+        Finally
+            ' Close the connection
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+    End Sub
+
+
+    Private Sub CheckAndLoadUpcomingReminders()
+        Try
+            Call OpenDB()
+
+            ' Query to select upcoming reminders based on current device time
+            Dim selectUpcomingRemindersQuery As String = "SELECT Title, Date, Note FROM tb_reminder WHERE created_by_id = @UserId AND Date >= NOW() ORDER BY Date ASC LIMIT 1"
+            CMD = New MySqlCommand(selectUpcomingRemindersQuery, Conn)
+            CMD.Parameters.AddWithValue("@UserId", My.Settings.UserID)
+
+            ' Execute query and retrieve upcoming reminders
+            Dim reader As MySqlDataReader = CMD.ExecuteReader()
+            If reader.Read() Then
+                ' Display upcoming reminder details in the label
+                Dim title As String = reader("Title").ToString()
+                Dim dateValue As DateTime = DateTime.Parse(reader("Date").ToString())
+                Dim note As String = reader("Note").ToString()
+
+                ' Format the upcoming reminder details
+                txtTitle.Text = title
+                txtTime.Text = dateValue.ToString("dd/MM/yyyy HH:mm")
+                txtNote.Text = note
+
+                ' Hide the stateNoUpcoming label since there is an upcoming reminder
+                stateNoUpcoming.Hide()
+            Else
+                ' No upcoming reminders found, show the stateNoUpcoming label
+                stateNoUpcoming.Show()
+            End If
+
+            ' Close the reader and connection
+            reader.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error Loading Upcoming Reminders")
+        Finally
+            ' Close the connection
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click

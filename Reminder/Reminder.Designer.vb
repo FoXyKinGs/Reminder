@@ -25,11 +25,11 @@ Partial Class Reminder
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Reminder))
         TabControl1 = New TabControl()
         tabHome = New TabPage()
-        lblGreeting = New Label()
-        dgUpcomingEvent = New DataGridView()
-        dgListEvent = New DataGridView()
         Label4 = New Label()
         Label3 = New Label()
+        lblGreeting = New Label()
+        dgListEvent = New DataGridView()
+        stateNoEvent = New Label()
         btnAddEvent = New Button()
         label2 = New Label()
         Label1 = New Label()
@@ -46,9 +46,13 @@ Partial Class Reminder
         Label6 = New Label()
         Label5 = New Label()
         btnLogout = New Button()
+        Label11 = New Label()
+        txtTitle = New Label()
+        txtTime = New Label()
+        txtNote = New Label()
+        stateNoUpcoming = New Label()
         TabControl1.SuspendLayout()
         tabHome.SuspendLayout()
-        CType(dgUpcomingEvent, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgListEvent, ComponentModel.ISupportInitialize).BeginInit()
         tabSettings.SuspendLayout()
         SuspendLayout()
@@ -65,11 +69,16 @@ Partial Class Reminder
         ' 
         ' tabHome
         ' 
-        tabHome.Controls.Add(lblGreeting)
-        tabHome.Controls.Add(dgUpcomingEvent)
-        tabHome.Controls.Add(dgListEvent)
+        tabHome.Controls.Add(stateNoUpcoming)
+        tabHome.Controls.Add(txtNote)
+        tabHome.Controls.Add(txtTime)
+        tabHome.Controls.Add(txtTitle)
+        tabHome.Controls.Add(Label11)
         tabHome.Controls.Add(Label4)
         tabHome.Controls.Add(Label3)
+        tabHome.Controls.Add(lblGreeting)
+        tabHome.Controls.Add(dgListEvent)
+        tabHome.Controls.Add(stateNoEvent)
         tabHome.Controls.Add(btnAddEvent)
         tabHome.Controls.Add(label2)
         tabHome.Controls.Add(Label1)
@@ -81,6 +90,24 @@ Partial Class Reminder
         tabHome.Text = "Home"
         tabHome.UseVisualStyleBackColor = True
         ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(25, 181)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(50, 25)
+        Label4.TabIndex = 9
+        Label4.Text = "Time"
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(25, 129)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(44, 25)
+        Label3.TabIndex = 8
+        Label3.Text = "Title"
+        ' 
         ' lblGreeting
         ' 
         lblGreeting.AutoSize = True
@@ -91,41 +118,23 @@ Partial Class Reminder
         lblGreeting.TabIndex = 7
         lblGreeting.Text = "..."
         ' 
-        ' dgUpcomingEvent
-        ' 
-        dgUpcomingEvent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgUpcomingEvent.Location = New Point(34, 118)
-        dgUpcomingEvent.Name = "dgUpcomingEvent"
-        dgUpcomingEvent.RowHeadersWidth = 62
-        dgUpcomingEvent.Size = New Size(949, 225)
-        dgUpcomingEvent.TabIndex = 6
-        ' 
         ' dgListEvent
         ' 
         dgListEvent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgListEvent.Location = New Point(34, 425)
+        dgListEvent.Location = New Point(25, 443)
         dgListEvent.Name = "dgListEvent"
         dgListEvent.RowHeadersWidth = 62
         dgListEvent.Size = New Size(949, 225)
         dgListEvent.TabIndex = 5
         ' 
-        ' Label4
+        ' stateNoEvent
         ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(437, 500)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(157, 25)
-        Label4.TabIndex = 4
-        Label4.Text = "No event available"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(391, 225)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(240, 25)
-        Label3.TabIndex = 3
-        Label3.Text = "There's no up coming events"
+        stateNoEvent.AutoSize = True
+        stateNoEvent.Location = New Point(437, 500)
+        stateNoEvent.Name = "stateNoEvent"
+        stateNoEvent.Size = New Size(157, 25)
+        stateNoEvent.TabIndex = 4
+        stateNoEvent.Text = "No event available"
         ' 
         ' btnAddEvent
         ' 
@@ -157,9 +166,9 @@ Partial Class Reminder
         Label1.Font = New Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(14, 64)
         Label1.Name = "Label1"
-        Label1.Size = New Size(245, 38)
+        Label1.Size = New Size(233, 38)
         Label1.TabIndex = 0
-        Label1.Text = "Up Coming Event"
+        Label1.Text = "Upcoming Event"
         ' 
         ' tabSettings
         ' 
@@ -295,6 +304,51 @@ Partial Class Reminder
         btnLogout.Text = "Logout"
         btnLogout.UseVisualStyleBackColor = False
         ' 
+        ' Label11
+        ' 
+        Label11.AutoSize = True
+        Label11.Location = New Point(25, 231)
+        Label11.Name = "Label11"
+        Label11.Size = New Size(51, 25)
+        Label11.TabIndex = 10
+        Label11.Text = "Note"
+        ' 
+        ' txtTitle
+        ' 
+        txtTitle.AutoSize = True
+        txtTitle.Location = New Point(116, 129)
+        txtTitle.Name = "txtTitle"
+        txtTitle.Size = New Size(24, 25)
+        txtTitle.TabIndex = 11
+        txtTitle.Text = "..."
+        ' 
+        ' txtTime
+        ' 
+        txtTime.AutoSize = True
+        txtTime.Location = New Point(116, 181)
+        txtTime.Name = "txtTime"
+        txtTime.Size = New Size(24, 25)
+        txtTime.TabIndex = 12
+        txtTime.Text = "..."
+        ' 
+        ' txtNote
+        ' 
+        txtNote.Location = New Point(116, 231)
+        txtNote.Name = "txtNote"
+        txtNote.Size = New Size(821, 105)
+        txtNote.TabIndex = 13
+        txtNote.Text = "..."
+        ' 
+        ' stateNoUpcoming
+        ' 
+        stateNoUpcoming.BackColor = SystemColors.InactiveBorder
+        stateNoUpcoming.Location = New Point(25, 115)
+        stateNoUpcoming.Name = "stateNoUpcoming"
+        stateNoUpcoming.Size = New Size(949, 235)
+        stateNoUpcoming.TabIndex = 14
+        stateNoUpcoming.Text = "There's no upcoming Event"
+        stateNoUpcoming.TextAlign = ContentAlignment.MiddleCenter
+        ' 
         ' Reminder
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
@@ -306,7 +360,6 @@ Partial Class Reminder
         TabControl1.ResumeLayout(False)
         tabHome.ResumeLayout(False)
         tabHome.PerformLayout()
-        CType(dgUpcomingEvent, ComponentModel.ISupportInitialize).EndInit()
         CType(dgListEvent, ComponentModel.ISupportInitialize).EndInit()
         tabSettings.ResumeLayout(False)
         tabSettings.PerformLayout()
@@ -320,9 +373,7 @@ Partial Class Reminder
     Friend WithEvents Label1 As Label
     Friend WithEvents btnAddEvent As Button
     Friend WithEvents label2 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents dgUpcomingEvent As DataGridView
+    Friend WithEvents stateNoEvent As Label
     Friend WithEvents dgListEvent As DataGridView
     Friend WithEvents Label7 As Label
     Friend WithEvents Label6 As Label
@@ -336,4 +387,11 @@ Partial Class Reminder
     Friend WithEvents lblGreeting As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents stateNoUpcoming As Label
+    Friend WithEvents txtNote As Label
+    Friend WithEvents txtTime As Label
+    Friend WithEvents txtTitle As Label
+    Friend WithEvents Label11 As Label
 End Class
