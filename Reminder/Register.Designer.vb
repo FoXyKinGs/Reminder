@@ -37,6 +37,7 @@ Partial Class Register
         ' 
         ' btnCreate
         ' 
+        btnCreate.Cursor = Cursors.Hand
         btnCreate.Location = New Point(370, 278)
         btnCreate.Name = "btnCreate"
         btnCreate.Size = New Size(163, 34)

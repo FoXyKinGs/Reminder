@@ -1,8 +1,36 @@
-﻿Imports MySql.Data.MySqlClient
-Imports System.Globalization
+﻿Imports System.Numerics
+Imports MySql.Data.MySqlClient
 
 Public Class Reminder
     Private greetingName As String = ""
+
+    Private notifyIcon As NotifyIcon
+    Private eventCheckTimer, userProfileTimer As Timer
+    Private eventUpcomingSoon As Boolean = True
+    Private Const OneMinuteInterval As Integer = 60000
+    Private Const OneSecondInterval As Integer = 1000
+
+    Public Sub New()
+        InitializeComponent()
+
+        ' Initialize NotifyIcon
+        notifyIcon = New NotifyIcon()
+        notifyIcon.Icon = SystemIcons.Information ' Use a system icon as a placeholder
+        notifyIcon.Text = "Reminder Application"
+        notifyIcon.Visible = True
+
+        ' Initialize Timer
+        eventCheckTimer = New Timer()
+        eventCheckTimer.Interval = OneMinuteInterval
+        AddHandler eventCheckTimer.Tick, AddressOf CheckForUpcomingEvents
+        eventCheckTimer.Start()
+
+        ' Initialize User Profile Timer
+        userProfileTimer = New Timer()
+        userProfileTimer.Interval = 60000 ' 1 minute
+        AddHandler userProfileTimer.Tick, AddressOf LoadUserProfile
+        userProfileTimer.Start()
+    End Sub
 
     Private Sub LoadUserProfile()
         Try
@@ -72,7 +100,7 @@ Public Class Reminder
             Call OpenDB()
 
             ' Query to select reminders based on UserID
-            Dim selectRemindersQuery As String = "SELECT Title, Date, Note FROM tb_reminder WHERE created_by_id = @UserId ORDER BY Date DESC"
+            Dim selectRemindersQuery As String = "SELECT id, Title, Date, Note FROM tb_reminder WHERE created_by_id = @UserId ORDER BY Date DESC"
             CMD = New MySqlCommand(selectRemindersQuery, Conn)
             CMD.Parameters.AddWithValue("@UserId", My.Settings.UserID)
 
@@ -89,6 +117,7 @@ Public Class Reminder
                 dgListEvent.DataSource = DS.Tables("Reminders")
 
                 ' Optionally, customize DataGridView appearance and behavior
+                dgListEvent.Columns("id").Visible = False ' Hide the id column
                 dgListEvent.Columns("Title").HeaderText = "Title"
                 dgListEvent.Columns("Date").HeaderText = "Date"
                 dgListEvent.Columns("Note").HeaderText = "Note"
@@ -96,9 +125,11 @@ Public Class Reminder
 
                 ' Show the DataGridView
                 dgListEvent.Show()
+                btnDeleteEvent.Show()
             Else
                 ' No reminders found, hide the DataGridView
                 dgListEvent.Hide()
+                btnDeleteEvent.Hide()
             End If
 
         Catch ex As Exception
@@ -108,7 +139,6 @@ Public Class Reminder
             If Conn.State = ConnectionState.Open Then Conn.Close()
         End Try
     End Sub
-
 
     Private Sub CheckAndLoadUpcomingReminders()
         Try
@@ -171,6 +201,40 @@ Public Class Reminder
         Me.Hide()
     End Sub
 
+    Private Sub btnDeleteEvent_Click(sender As Object, e As EventArgs) Handles btnDeleteEvent.Click
+        If dgListEvent.SelectedRows.Count > 0 Then
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete the selected event?", "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If result = DialogResult.Yes Then
+                Try
+                    Dim selectedRow As DataGridViewRow = dgListEvent.SelectedRows(0)
+                    Dim reminderId As Integer = selectedRow.Cells("id").Value
+
+                    Call OpenDB()
+
+                    ' SQL query to delete the selected reminder
+                    Dim deleteQuery As String = "DELETE FROM tb_reminder WHERE id = @ReminderId"
+                    CMD = New MySqlCommand(deleteQuery, Conn)
+                    CMD.Parameters.AddWithValue("@ReminderId", reminderId)
+
+                    ' Execute the delete query
+                    CMD.ExecuteNonQuery()
+
+                    MessageBox.Show("Event deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    ' Refresh the DataGridView to reflect the changes
+                    LoadUserProfile()
+                Catch ex As Exception
+                    MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error Deleting Event")
+                Finally
+                    If Conn.State = ConnectionState.Open Then Conn.Close()
+                End Try
+            End If
+        Else
+            MessageBox.Show("Please select an event to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
     Private Sub Reminder_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadUserProfile()
 
@@ -209,9 +273,78 @@ Public Class Reminder
         End If
     End Sub
 
+    Private Sub CheckForUpcomingEvents(sender As Object, e As EventArgs)
+        Try
+            Call OpenDB()
+
+            ' Query to select reminders within the next 5 minutes or exactly at the current time
+            Dim selectUpcomingRemindersQuery As String = "SELECT id, Title, Date, Note FROM tb_reminder WHERE created_by_id = @UserId AND Date >= NOW() AND Date <= DATE_ADD(NOW(), INTERVAL 5 MINUTE)"
+            CMD = New MySqlCommand(selectUpcomingRemindersQuery, Conn)
+            CMD.Parameters.AddWithValue("@UserId", My.Settings.UserID)
+
+            ' Execute query and retrieve upcoming reminders
+            Dim reader As MySqlDataReader = CMD.ExecuteReader()
+            While reader.Read()
+                ' Display upcoming reminder details in the notification
+                Dim id As Integer = reader("id")
+                Dim title As String = reader("Title").ToString()
+                Dim dateValue As DateTime = DateTime.Parse(reader("Date").ToString())
+                Dim note As String = reader("Note").ToString()
+
+                ' Format the upcoming reminder details
+                Dim reminderDetails As String = $"Title: {title}" & vbCrLf &
+                                                $"Date & Time: {dateValue.ToString("dd/MM/yyyy HH:mm")}" & vbCrLf &
+                                                $"Note: {note}"
+
+                ' Check if the user was notified 5 minutes before
+                If eventUpcomingSoon Then
+                    If dateValue <= DateTime.Now.AddMinutes(5) AndAlso dateValue > DateTime.Now Then
+                        ' Show notification for upcoming reminder
+                        notifyIcon.BalloonTipTitle = "Upcoming Reminder"
+                        notifyIcon.BalloonTipText = reminderDetails
+                        notifyIcon.ShowBalloonTip(3000) ' Show the balloon tip for 3 seconds
+
+                        ' Set flag to indicate an upcoming reminder has been notified
+                        eventUpcomingSoon = False
+
+                        ' Change interval to 1 second
+                        eventCheckTimer.Interval = OneSecondInterval
+                        eventCheckTimer.Stop()
+                        eventCheckTimer.Start()
+                    End If
+                Else
+                    If dateValue <= DateTime.Now Then
+                        ' Show notification for exact match and play sound
+                        notifyIcon.BalloonTipTitle = "Reminder Alert"
+                        notifyIcon.BalloonTipText = reminderDetails
+                        notifyIcon.ShowBalloonTip(3000) ' Show the balloon tip for 3 seconds
+
+                        ' Set flag to indicate no upcoming reminders within 5 minutes after this one
+                        eventUpcomingSoon = True
+
+                        ' Change interval back to 1 minute
+                        eventCheckTimer.Interval = OneMinuteInterval
+                        eventCheckTimer.Stop()
+                        eventCheckTimer.Start()
+
+                    End If
+                End If
+            End While
+
+            LoadUserProfile() ' update the newest upcoming event
+
+            ' Close the reader and connection
+            reader.Close()
+        Catch ex As Exception
+            MsgBox(ex.ToString(), MsgBoxStyle.Critical, "Error Checking Upcoming Events")
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+    End Sub
+
     Private Sub btnChangePassword_Click(sender As Object, e As EventArgs) Handles btnChangePassword.Click
         Me.Hide()
-        Dim ChangePassword As New changePassword()
+        Dim ChangePassword As New ChangePassword()
         ChangePassword.Show()
     End Sub
 End Class

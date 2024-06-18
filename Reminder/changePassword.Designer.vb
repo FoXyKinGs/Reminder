@@ -94,6 +94,7 @@ Partial Class changePassword
         ' 
         ' btnChangePassword
         ' 
+        btnChangePassword.Cursor = Cursors.Hand
         btnChangePassword.Location = New Point(510, 225)
         btnChangePassword.Name = "btnChangePassword"
         btnChangePassword.Size = New Size(112, 34)
@@ -101,7 +102,7 @@ Partial Class changePassword
         btnChangePassword.Text = "Change!"
         btnChangePassword.UseVisualStyleBackColor = True
         ' 
-        ' changePassword
+        ' ChangePassword
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
@@ -114,7 +115,7 @@ Partial Class changePassword
         Controls.Add(Label2)
         Controls.Add(Label1)
         Controls.Add(btnBack)
-        Name = "changePassword"
+        Name = "ChangePassword"
         Text = "Change Password"
         ResumeLayout(False)
         PerformLayout()

@@ -33,6 +33,7 @@ Partial Class Login
         ' 
         ' btnLogin
         ' 
+        btnLogin.Cursor = Cursors.Hand
         btnLogin.Location = New Point(290, 161)
         btnLogin.Name = "btnLogin"
         btnLogin.Size = New Size(206, 34)

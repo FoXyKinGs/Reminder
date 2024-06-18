@@ -25,6 +25,12 @@ Partial Class Reminder
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Reminder))
         TabControl1 = New TabControl()
         tabHome = New TabPage()
+        btnDeleteEvent = New Button()
+        stateNoUpcoming = New Label()
+        txtNote = New Label()
+        txtTime = New Label()
+        txtTitle = New Label()
+        Label11 = New Label()
         Label4 = New Label()
         Label3 = New Label()
         lblGreeting = New Label()
@@ -46,11 +52,6 @@ Partial Class Reminder
         Label6 = New Label()
         Label5 = New Label()
         btnLogout = New Button()
-        Label11 = New Label()
-        txtTitle = New Label()
-        txtTime = New Label()
-        txtNote = New Label()
-        stateNoUpcoming = New Label()
         TabControl1.SuspendLayout()
         tabHome.SuspendLayout()
         CType(dgListEvent, ComponentModel.ISupportInitialize).BeginInit()
@@ -69,6 +70,7 @@ Partial Class Reminder
         ' 
         ' tabHome
         ' 
+        tabHome.Controls.Add(btnDeleteEvent)
         tabHome.Controls.Add(stateNoUpcoming)
         tabHome.Controls.Add(txtNote)
         tabHome.Controls.Add(txtTime)
@@ -89,6 +91,61 @@ Partial Class Reminder
         tabHome.TabIndex = 0
         tabHome.Text = "Home"
         tabHome.UseVisualStyleBackColor = True
+        ' 
+        ' btnDeleteEvent
+        ' 
+        btnDeleteEvent.Cursor = Cursors.Hand
+        btnDeleteEvent.Location = New Point(851, 644)
+        btnDeleteEvent.Name = "btnDeleteEvent"
+        btnDeleteEvent.Size = New Size(112, 34)
+        btnDeleteEvent.TabIndex = 15
+        btnDeleteEvent.Text = "Delete"
+        btnDeleteEvent.UseVisualStyleBackColor = True
+        ' 
+        ' stateNoUpcoming
+        ' 
+        stateNoUpcoming.BackColor = SystemColors.InactiveBorder
+        stateNoUpcoming.Location = New Point(25, 115)
+        stateNoUpcoming.Name = "stateNoUpcoming"
+        stateNoUpcoming.Size = New Size(949, 221)
+        stateNoUpcoming.TabIndex = 14
+        stateNoUpcoming.Text = "There's no upcoming Event"
+        stateNoUpcoming.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' txtNote
+        ' 
+        txtNote.Location = New Point(116, 231)
+        txtNote.Name = "txtNote"
+        txtNote.Size = New Size(821, 105)
+        txtNote.TabIndex = 13
+        txtNote.Text = "..."
+        ' 
+        ' txtTime
+        ' 
+        txtTime.AutoSize = True
+        txtTime.Location = New Point(116, 181)
+        txtTime.Name = "txtTime"
+        txtTime.Size = New Size(24, 25)
+        txtTime.TabIndex = 12
+        txtTime.Text = "..."
+        ' 
+        ' txtTitle
+        ' 
+        txtTitle.AutoSize = True
+        txtTitle.Location = New Point(116, 129)
+        txtTitle.Name = "txtTitle"
+        txtTitle.Size = New Size(24, 25)
+        txtTitle.TabIndex = 11
+        txtTitle.Text = "..."
+        ' 
+        ' Label11
+        ' 
+        Label11.AutoSize = True
+        Label11.Location = New Point(25, 231)
+        Label11.Name = "Label11"
+        Label11.Size = New Size(51, 25)
+        Label11.TabIndex = 10
+        Label11.Text = "Note"
         ' 
         ' Label4
         ' 
@@ -121,7 +178,7 @@ Partial Class Reminder
         ' dgListEvent
         ' 
         dgListEvent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgListEvent.Location = New Point(25, 443)
+        dgListEvent.Location = New Point(14, 403)
         dgListEvent.Name = "dgListEvent"
         dgListEvent.RowHeadersWidth = 62
         dgListEvent.Size = New Size(949, 225)
@@ -138,6 +195,7 @@ Partial Class Reminder
         ' 
         ' btnAddEvent
         ' 
+        btnAddEvent.Cursor = Cursors.Hand
         btnAddEvent.Image = CType(resources.GetObject("btnAddEvent.Image"), Image)
         btnAddEvent.ImageAlign = ContentAlignment.MiddleRight
         btnAddEvent.Location = New Point(876, 8)
@@ -153,7 +211,7 @@ Partial Class Reminder
         label2.AutoSize = True
         label2.BackColor = Color.Thistle
         label2.Font = New Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        label2.Location = New Point(14, 363)
+        label2.Location = New Point(14, 353)
         label2.Name = "label2"
         label2.Size = New Size(90, 38)
         label2.TabIndex = 1
@@ -215,6 +273,7 @@ Partial Class Reminder
         ' 
         ' btnChangePassword
         ' 
+        btnChangePassword.Cursor = Cursors.Hand
         btnChangePassword.Location = New Point(633, 284)
         btnChangePassword.Name = "btnChangePassword"
         btnChangePassword.Size = New Size(169, 34)
@@ -297,57 +356,13 @@ Partial Class Reminder
         ' btnLogout
         ' 
         btnLogout.BackColor = Color.IndianRed
+        btnLogout.Cursor = Cursors.Hand
         btnLogout.Location = New Point(450, 648)
         btnLogout.Name = "btnLogout"
         btnLogout.Size = New Size(169, 34)
         btnLogout.TabIndex = 0
         btnLogout.Text = "Logout"
         btnLogout.UseVisualStyleBackColor = False
-        ' 
-        ' Label11
-        ' 
-        Label11.AutoSize = True
-        Label11.Location = New Point(25, 231)
-        Label11.Name = "Label11"
-        Label11.Size = New Size(51, 25)
-        Label11.TabIndex = 10
-        Label11.Text = "Note"
-        ' 
-        ' txtTitle
-        ' 
-        txtTitle.AutoSize = True
-        txtTitle.Location = New Point(116, 129)
-        txtTitle.Name = "txtTitle"
-        txtTitle.Size = New Size(24, 25)
-        txtTitle.TabIndex = 11
-        txtTitle.Text = "..."
-        ' 
-        ' txtTime
-        ' 
-        txtTime.AutoSize = True
-        txtTime.Location = New Point(116, 181)
-        txtTime.Name = "txtTime"
-        txtTime.Size = New Size(24, 25)
-        txtTime.TabIndex = 12
-        txtTime.Text = "..."
-        ' 
-        ' txtNote
-        ' 
-        txtNote.Location = New Point(116, 231)
-        txtNote.Name = "txtNote"
-        txtNote.Size = New Size(821, 105)
-        txtNote.TabIndex = 13
-        txtNote.Text = "..."
-        ' 
-        ' stateNoUpcoming
-        ' 
-        stateNoUpcoming.BackColor = SystemColors.InactiveBorder
-        stateNoUpcoming.Location = New Point(25, 115)
-        stateNoUpcoming.Name = "stateNoUpcoming"
-        stateNoUpcoming.Size = New Size(949, 235)
-        stateNoUpcoming.TabIndex = 14
-        stateNoUpcoming.Text = "There's no upcoming Event"
-        stateNoUpcoming.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' Reminder
         ' 
@@ -394,4 +409,5 @@ Partial Class Reminder
     Friend WithEvents txtTime As Label
     Friend WithEvents txtTitle As Label
     Friend WithEvents Label11 As Label
+    Friend WithEvents btnDeleteEvent As Button
 End Class

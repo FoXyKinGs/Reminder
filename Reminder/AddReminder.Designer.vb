@@ -72,6 +72,7 @@ Partial Class AddReminder
         ' 
         ' btnAddReminder
         ' 
+        btnAddReminder.Cursor = Cursors.Hand
         btnAddReminder.Location = New Point(203, 522)
         btnAddReminder.Name = "btnAddReminder"
         btnAddReminder.Size = New Size(224, 34)
@@ -97,6 +98,7 @@ Partial Class AddReminder
         ' 
         ' btnBack
         ' 
+        btnBack.Cursor = Cursors.Hand
         btnBack.Location = New Point(23, 31)
         btnBack.Name = "btnBack"
         btnBack.Size = New Size(112, 34)
