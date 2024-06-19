@@ -25,6 +25,8 @@ Partial Class Reminder
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Reminder))
         TabControl1 = New TabControl()
         tabHome = New TabPage()
+        txtCountdown = New Label()
+        Label12 = New Label()
         btnDeleteEvent = New Button()
         stateNoUpcoming = New Label()
         txtNote = New Label()
@@ -70,8 +72,10 @@ Partial Class Reminder
         ' 
         ' tabHome
         ' 
-        tabHome.Controls.Add(btnDeleteEvent)
         tabHome.Controls.Add(stateNoUpcoming)
+        tabHome.Controls.Add(txtCountdown)
+        tabHome.Controls.Add(Label12)
+        tabHome.Controls.Add(btnDeleteEvent)
         tabHome.Controls.Add(txtNote)
         tabHome.Controls.Add(txtTime)
         tabHome.Controls.Add(txtTitle)
@@ -92,6 +96,24 @@ Partial Class Reminder
         tabHome.Text = "Home"
         tabHome.UseVisualStyleBackColor = True
         ' 
+        ' txtCountdown
+        ' 
+        txtCountdown.AutoSize = True
+        txtCountdown.Location = New Point(583, 129)
+        txtCountdown.Name = "txtCountdown"
+        txtCountdown.Size = New Size(24, 25)
+        txtCountdown.TabIndex = 17
+        txtCountdown.Text = "..."
+        ' 
+        ' Label12
+        ' 
+        Label12.AutoSize = True
+        Label12.Location = New Point(463, 129)
+        Label12.Name = "Label12"
+        Label12.Size = New Size(105, 25)
+        Label12.TabIndex = 16
+        Label12.Text = "Countdown"
+        ' 
         ' btnDeleteEvent
         ' 
         btnDeleteEvent.Cursor = Cursors.Hand
@@ -105,7 +127,7 @@ Partial Class Reminder
         ' stateNoUpcoming
         ' 
         stateNoUpcoming.BackColor = SystemColors.InactiveBorder
-        stateNoUpcoming.Location = New Point(25, 115)
+        stateNoUpcoming.Location = New Point(14, 115)
         stateNoUpcoming.Name = "stateNoUpcoming"
         stateNoUpcoming.Size = New Size(949, 221)
         stateNoUpcoming.TabIndex = 14
@@ -410,4 +432,6 @@ Partial Class Reminder
     Friend WithEvents txtTitle As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents btnDeleteEvent As Button
+    Friend WithEvents txtCountdown As Label
+    Friend WithEvents Label12 As Label
 End Class

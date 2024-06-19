@@ -9,6 +9,7 @@ Public Class Reminder
     Private eventUpcomingSoon As Boolean = True
     Private Const OneMinuteInterval As Integer = 60000
     Private Const OneSecondInterval As Integer = 1000
+    Private countdownTimer As Timer
 
     Public Sub New()
         InitializeComponent()
@@ -24,6 +25,13 @@ Public Class Reminder
         eventCheckTimer.Interval = OneMinuteInterval
         AddHandler eventCheckTimer.Tick, AddressOf CheckForUpcomingEvents
         eventCheckTimer.Start()
+
+        ' Initialize Countdown Timer
+        countdownTimer = New Timer()
+        countdownTimer.Interval = OneSecondInterval
+        AddHandler countdownTimer.Tick, AddressOf UpdateCountdown
+        countdownTimer.Start()
+
 
         ' Initialize User Profile Timer
         userProfileTimer = New Timer()
@@ -95,6 +103,25 @@ Public Class Reminder
         lblGreeting.Text = $"Good {timeOfDay}. Welcome back, {greetingName}!"
     End Sub
 
+    Private Sub UpdateCountdown(sender As Object, e As EventArgs)
+        If txtTime.Text <> "" Then
+            Dim reminderDate As DateTime
+            If DateTime.TryParseExact(txtTime.Text, "dd/MM/yyyy HH:mm:ss", Nothing, Globalization.DateTimeStyles.None, reminderDate) Then
+                Dim timeRemaining As TimeSpan = reminderDate - DateTime.Now
+                If timeRemaining.TotalSeconds > 0 Then
+                    txtCountdown.Text = String.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaining.Hours, timeRemaining.Minutes, timeRemaining.Seconds)
+                Else
+                    txtCountdown.Text = "00:00:00"
+                    countdownTimer.Stop() ' Stop the timer when the countdown is over
+                End If
+            End If
+        Else
+            txtCountdown.Text = "00:00:00"
+            countdownTimer.Stop() ' Stop the timer if there is no upcoming reminder
+        End If
+    End Sub
+
+
     Private Sub LoadReminders()
         Try
             Call OpenDB()
@@ -159,7 +186,7 @@ Public Class Reminder
 
                 ' Format the upcoming reminder details
                 txtTitle.Text = title
-                txtTime.Text = dateValue.ToString("dd/MM/yyyy HH:mm")
+                txtTime.Text = dateValue.ToString("dd/MM/yyyy HH:mm:ss")
                 txtNote.Text = note
 
                 ' Hide the stateNoUpcoming label since there is an upcoming reminder
@@ -240,7 +267,11 @@ Public Class Reminder
 
         ' Set initial greeting based on current time
         UpdateGreeting(greetingName)
+
+        ' Start the countdown timer
+        countdownTimer.Start()
     End Sub
+
 
     Private Sub btnSaveProfile_Click(sender As Object, e As EventArgs) Handles btnSaveProfile.Click
         Dim saveChanges = MessageBox.Show("Save Changes?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
